@@ -98,7 +98,7 @@ Array of models:
 ]
 ```
 
-[gh-workflow-image]: https://img.shields.io/github/actions/workflow/status/adonisjs/lucid/checks.yml?style=for-the-badge
+[gh-workflow-image]: https://img.shields.io/github/actions/workflow/status/manomintis/adonis-api-resources/checks.yml?style=for-the-badge
 [gh-workflow-url]: https://github.com/manomintis/adonis-api-resources/actions/workflows/checks.yml "Github action"
 
 [npm-image]: https://img.shields.io/npm/v/adonis-api-resources/latest.svg?style=for-the-badge&logo=npm
@@ -107,4 +107,4 @@ Array of models:
 [typescript-image]: https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript
 
 [license-url]: LICENSE.md
-[license-image]: https://img.shields.io/github/license/adonisjs/lucid?style=for-the-badge
+[license-image]: https://img.shields.io/github/license/manomintis/adonis-api-resources?style=for-the-badge
