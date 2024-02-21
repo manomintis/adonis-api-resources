@@ -1,4 +1,4 @@
-import { Resource } from 'adonis-api-resources'
+import { Resource } from '../src/resource.js'
 import { test } from '@japa/runner'
 
 class TestResourceResource extends Resource {
