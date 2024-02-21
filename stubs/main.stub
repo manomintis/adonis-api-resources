@@ -1,0 +1,16 @@
+{{#var className = generators.modelName(entity.name)}}
+{{#var fileName = string(className).snakeCase().removeSuffix('resource').plural().suffix('_resource').ext('.ts').toString()}}
+{{{
+  exports({
+    to: app.makePath('app/resources', entity.path, fileName)
+  })
+}}}
+import { Resource } from 'adonis-api-resources'
+
+export default class {{ className }}Resource extends Resource {
+  defineMap(data: any): object {
+    return {
+      id: data.id,
+    }
+  }
+}
