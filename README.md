@@ -1,5 +1,9 @@
 # AdonisJS API resources
 
+[![gh-workflow-image]][gh-workflow-url] [![npm-image]][npm-url] ![][typescript-image] [![license-image]][license-url]
+
+## Description
+
 Provides a transformation layer between models and actual API endpont responses in JSON format.
 
 ## Setup
@@ -94,3 +98,13 @@ Array of models:
 ]
 ```
 
+[gh-workflow-image]: https://img.shields.io/github/actions/workflow/status/adonisjs/lucid/checks.yml?style=for-the-badge
+[gh-workflow-url]: https://github.com/manomintis/adonis-api-resources/actions/workflows/checks.yml "Github action"
+
+[npm-image]: https://img.shields.io/npm/v/adonis-api-resources/latest.svg?style=for-the-badge&logo=npm
+[npm-url]: https://www.npmjs.com/package/adonis-api-resources/v/latest "npm"
+
+[typescript-image]: https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript
+
+[license-url]: LICENSE.md
+[license-image]: https://img.shields.io/github/license/adonisjs/lucid?style=for-the-badge
