@@ -28,7 +28,7 @@ node ace configure adonis-api-resources
 Generate a new resource:
 
 ```sh
-node ace make:resource UserResource
+node ace make:resource user
 ```
 
 
@@ -46,7 +46,7 @@ Edit newly generated app/resources/users_resource.ts to create output you need. 
 Import your generated resource before using it, i.e. in a controller:
 
 ```typescript
-import UsersResource from '#resources/users_resource'
+import UserResource from '#resources/user_resource'
 ```
 
 
@@ -60,14 +60,14 @@ return user
 Use the your generated resource instead:
 
 ```typescript
-return new UsersResource(user).refine()
+return new UserResource(user).refine()
 ```
 
 
 You may also use arrays of models, with resources:
 
 ```typescript
-return new UsersResource(users).refine()
+return new UserResource(users).refine()
 ```
 
 That's it. Enjoy yourself!

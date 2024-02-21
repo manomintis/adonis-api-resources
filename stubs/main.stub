@@ -1,5 +1,5 @@
 {{#var className = generators.modelName(entity.name)}}
-{{#var fileName = string(className).snakeCase().removeSuffix('resource').plural().suffix('_resource').ext('.ts').toString()}}
+{{#var fileName = string(entity.name).snakeCase().removeSuffix('resource').suffix('_resource').ext('.ts').toString()}}
 {{{
   exports({
     to: app.makePath('app/resources', entity.path, fileName)
