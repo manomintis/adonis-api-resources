@@ -98,8 +98,8 @@ Array of models:
 ]
 ```
 
-[gh-workflow-image]: https://img.shields.io/github/actions/workflow/status/manomintis/adonis-api-resources/checks.yml?style=for-the-badge
-[gh-workflow-url]: https://github.com/manomintis/adonis-api-resources/actions/workflows/checks.yml "Github action"
+[gh-workflow-image]: https://img.shields.io/github/actions/workflow/status/manomintis/adonis-api-resources/test.yml?style=for-the-badge
+[gh-workflow-url]: https://github.com/manomintis/adonis-api-resources/actions/workflows/test.yml "Github action"
 
 [npm-image]: https://img.shields.io/npm/v/adonis-api-resources/latest.svg?style=for-the-badge&logo=npm
 [npm-url]: https://www.npmjs.com/package/adonis-api-resources/v/latest "npm"

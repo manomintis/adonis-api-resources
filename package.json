@@ -9,6 +9,9 @@
   "files": [
     "build/src",
     "build/stubs",
+    "build/commands",
+    "build/configure.d.ts",
+    "build/configure.js",
     "build/index.d.ts",
     "build/index.js"
   ],
