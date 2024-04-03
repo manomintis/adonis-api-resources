@@ -32,10 +32,17 @@ export abstract class Resource {
 
   // Return refined output
   refine(): object {
-    if (!Array.isArray(this.data)) {
-      return this.refine_entity(this.data)
-    } else {
+    if ('rows' in this.data && 'currentPage' in this.data) {
+      const meta = (this.data as any).getMeta()
+      const collection = this.refine_collection((this.data as any).rows)
+      const result = {
+        meta: meta,
+        data: collection,
+      }
+      return result
+    } else if (Array.isArray(this.data)) {
       return this.refine_collection(this.data)
     }
+    return this.refine_entity(this.data)
   }
 }

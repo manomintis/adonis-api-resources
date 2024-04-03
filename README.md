@@ -98,6 +98,18 @@ Array of models:
 ]
 ```
 
+
+## Pagination support
+
+
+Offset-based pagination is supported. Example usage:
+
+```typescript
+const users = await User.query().paginate(1, 10)
+return new UserResource(users).refine()
+```
+
+
 [gh-workflow-image]: https://img.shields.io/github/actions/workflow/status/manomintis/adonis-api-resources/test.yml?style=for-the-badge
 [gh-workflow-url]: https://github.com/manomintis/adonis-api-resources/actions/workflows/test.yml "Github action"
 
