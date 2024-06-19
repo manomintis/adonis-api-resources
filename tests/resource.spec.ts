@@ -1,4 +1,3 @@
-import { serialize } from 'node:v8'
 import { Resource } from '../src/resource.js'
 import { test } from '@japa/runner'
 
@@ -67,9 +66,9 @@ class ObjectPaginated {
 }
 const testObjectPaginated = new ObjectPaginated()
 
-const resultEntity: any = new TestResourceResource(testObjectEntity).refine()
-const resultCollection: any = new TestResourceResource(testObjectCollection).refine()
-const resultPaginated: any = new TestResourceResource(testObjectPaginated).refine()
+const resultRefineEntity: any = new TestResourceResource(testObjectEntity).refine()
+const resultRefineCollection: any = new TestResourceResource(testObjectCollection).refine()
+const resultRefineLucidPaginated: any = new TestResourceResource(testObjectPaginated).refine()
 const resultRefinedPaginated: any = new TestResourceResource(testObjectCollection).refinePaginate(
   1,
   4
@@ -78,21 +77,35 @@ const resultRefinedPaginated2: any = new TestResourceResource(testObjectCollecti
   2,
   4
 )
-const resultPick: any = new TestResourceResource(testObjectCollection).pick('firstName')
-const resultOmit: any = new TestResourceResource(testObjectCollection).omit('firstName')
+
+const resultPickEntity: any = new TestResourceResource(testObjectEntity).pick('firstName').get()
+const resultPickCollection: any = new TestResourceResource(testObjectCollection)
+  .pick('firstName')
+  .get()
+const resultPickPaginated: any = new TestResourceResource(testObjectPaginated)
+  .pick('firstName')
+  .get()
+
+const resultOmitEntity: any = new TestResourceResource(testObjectEntity).omit('firstName').get()
+const resultOmitCollection: any = new TestResourceResource(testObjectCollection)
+  .omit('firstName')
+  .get()
+const resultOmitPaginated: any = new TestResourceResource(testObjectPaginated)
+  .omit('firstName')
+  .get()
 
 test.group('Resource', () => {
   test('test_entity', ({ assert }) => {
-    assert.equal(resultEntity.fullName, 'John Doe')
+    assert.equal(resultRefineEntity.fullName, 'John Doe')
   })
   test('test_collection', ({ assert }) => {
-    assert.equal(resultCollection[0].fullName, 'John Doe')
-    assert.equal(resultCollection[1].fullName, 'Jane Doe')
+    assert.equal(resultRefineCollection[0].fullName, 'John Doe')
+    assert.equal(resultRefineCollection[1].fullName, 'Jane Doe')
   })
   test('test_pagination', ({ assert }) => {
-    assert.equal(resultPaginated.data[0].fullName, 'John Doe')
-    assert.equal(resultPaginated.data[1].fullName, 'Jane Doe')
-    assert.equal(resultPaginated.meta.currentPage, 1)
+    assert.equal(resultRefineLucidPaginated.data[0].fullName, 'John Doe')
+    assert.equal(resultRefineLucidPaginated.data[1].fullName, 'Jane Doe')
+    assert.equal(resultRefineLucidPaginated.meta.currentPage, 1)
   })
   test('test_refine_pagination', ({ assert }) => {
     assert.equal(resultRefinedPaginated.data[0].fullName, 'John Doe')
@@ -104,12 +117,32 @@ test.group('Resource', () => {
     assert.equal(resultRefinedPaginated2.data[1].fullName, 'Jane2 Doe2')
     assert.equal(resultRefinedPaginated2.meta.currentPage, 2)
   })
-  test('test_pick', ({ assert }) => {
-    assert.equal(resultPick.data[0].firstName, 'John')
-    assert.equal(resultPick.data[0].lastName, undefined)
+
+  test('test_pick_entity', ({ assert }) => {
+    assert.equal(resultPickEntity.firstName, 'John')
+    assert.equal(resultPickEntity.lastName, undefined)
   })
-  test('test_omit', ({ assert }) => {
-    assert.equal(resultOmit.data[0].firstName, undefined)
-    assert.equal(resultOmit.data[0].lastName, 'Doe')
+  test('test_pick_collection', ({ assert }) => {
+    assert.equal(resultPickCollection[0].firstName, 'John')
+    assert.equal(resultPickCollection[0].lastName, undefined)
+  })
+  test('test_pick_collection_paginated', ({ assert }) => {
+    assert.equal(resultPickPaginated.data[0].firstName, 'John')
+    assert.equal(resultPickPaginated.data[0].lastName, undefined)
+    assert.equal(resultPickPaginated.meta.currentPage, 1)
+  })
+
+  test('test_omit_entity', ({ assert }) => {
+    assert.equal(resultOmitEntity.firstName, undefined)
+    assert.equal(resultOmitEntity.lastName, 'Doe')
+  })
+  test('test_omit_collection', ({ assert }) => {
+    assert.equal(resultOmitCollection[0].firstName, undefined)
+    assert.equal(resultOmitCollection[0].lastName, 'Doe')
+  })
+  test('test_pick_collection_paginated', ({ assert }) => {
+    assert.equal(resultOmitPaginated.data[0].firstName, undefined)
+    assert.equal(resultOmitPaginated.data[0].lastName, 'Doe')
+    assert.equal(resultOmitPaginated.meta.currentPage, 1)
   })
 })
