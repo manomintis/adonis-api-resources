@@ -24,6 +24,13 @@ export abstract class Resource {
     return Array.isArray(this.data)
   }
 
+  private parsePaginated(meta: object, data: object): object {
+    return {
+      meta: meta,
+      data: data,
+    }
+  }
+
   private redefineEntity(data: any): object {
     return this.defineMap(data)
   }
@@ -34,34 +41,67 @@ export abstract class Resource {
     })
   }
 
-  pick(...keys: string[]): this {
+  private pickEntity(entity: object, keys: string[]) {
+    return Object.assign({}, ...keys.map((key) => ({ [key]: (entity as any)[key] })))
+  }
+
+  private pickCollection(data: object[], keys: string[]) {
     let result = []
-    for (let item of this.data) {
-      result.push(Object.assign({}, ...keys.map((key) => ({ [key]: item[key] }))))
+    for (let entity of data) {
+      result.push(this.pickEntity(entity, keys))
     }
-    this.data = result
+    return result
+  }
+
+  private omitEntity(entity: object, keys: string[]) {
+    const exclude = new Set(keys)
+    const o =
+      'serialize' in entity && typeof entity.serialize === 'function' ? entity.serialize() : entity
+    return Object.fromEntries(Object.entries(o).filter((e) => !exclude.has(e[0])))
+  }
+
+  private omitCollection(data: object[], keys: string[]) {
+    let result = []
+    for (let entity of data) {
+      result.push(this.omitEntity(entity, keys))
+    }
+    return result
+  }
+
+  pick(...keys: string[]): this {
+    if (this.isPaginated()) {
+      this.data = this.parsePaginated(
+        (this.data as any).getMeta(),
+        this.pickCollection((this.data as any).rows, keys)
+      )
+    } else if (this.isCollection()) {
+      this.data = this.pickCollection(this.data, keys)
+    } else {
+      this.data = this.pickEntity(this.data, keys)
+    }
     return this
   }
 
   omit(...keys: string[]): this {
-    let result = []
-    const exclude = new Set(keys)
-    for (let item of this.data) {
-      const o = typeof item.serialize === 'function' ? item.serialize() : item
-      result.push(Object.fromEntries(Object.entries(o).filter((e) => !exclude.has(e[0]))))
+    if (this.isPaginated()) {
+      this.data = this.parsePaginated(
+        (this.data as any).getMeta(),
+        this.omitCollection((this.data as any).rows, keys)
+      )
+    } else if (this.isCollection()) {
+      this.data = this.omitCollection(this.data, keys)
+    } else {
+      this.data = this.omitEntity(this.data, keys)
     }
-    this.data = result
     return this
   }
 
   redefine(): this {
     if (this.isPaginated()) {
-      const meta = (this.data as any).getMeta()
-      const collection = this.redefineCollection((this.data as any).rows)
-      this.data = {
-        meta: meta,
-        data: collection,
-      }
+      this.data = this.parsePaginated(
+        (this.data as any).getMeta(),
+        this.redefineCollection((this.data as any).rows)
+      )
     } else if (this.isCollection()) {
       this.data = this.redefineCollection(this.data)
     } else {
