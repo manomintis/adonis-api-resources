@@ -38,7 +38,7 @@ Remove old endpoint return declaration:
 return user
 ```
 
-Use the your generated resource instead (either of them):
+Use the your generated resource instead:
 
 ```typescript
 return new UserResource(user).refine()
@@ -58,7 +58,7 @@ Edit newly generated app/resources/user_resource.ts to create output you need. T
 ...
 ```
 
-You may also use arrays of models, with resources:
+You may also use arrays of models with resources:
 
 ```typescript
 return new UserResource(users).refine()
@@ -98,9 +98,8 @@ return new UserResource(users).redefine().paginate(page, limit)
 
 Arguments:
 
-page - optional (default value is 1)
-
-limit - optional (default value is 10)
+page - number of page to show (optional, default value: 1)<br />
+limit - items per page (optional, default value: 10)
 
 ## pick()
 
