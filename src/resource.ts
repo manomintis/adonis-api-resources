@@ -120,10 +120,21 @@ export abstract class Resource {
 
   paginate(page: number = 1, limit: number = 10) {
     let lastPage = Math.max(Math.ceil(this.data.length / limit), 1)
-    const meta = {
+    interface PaginationMeta {
+      total: number
+      perPage: number
+      currentPage: number
+      lastPage: number
+      firstPage: number
+      firstPageUrl: string
+      lastPageUrl: string
+      nextPageUrl: string | null
+      previousPageUrl: string | null
+    }
+    const meta: PaginationMeta = {
       total: this.data.length,
-      perPage: limit,
-      currentPage: page,
+      perPage: Math.floor(limit),
+      currentPage: Math.floor(page),
       lastPage: lastPage,
       firstPage: 1,
       firstPageUrl: '/?page=1',
