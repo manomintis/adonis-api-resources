@@ -25,10 +25,10 @@ export async function configure(_command: ConfigureCommand) {
 
   /**
    * Update JSON configuration files to create "resources" namespace
-   * @param {string} configName - Either "package.json" or "tsconfig.json"
+   * @param {string} configName - JSON configuration file name ("package.json" only)
    * @returns {void} - No output
    */
-  function updateConfig(configName: 'package.json' | 'tsconfig.json'): void {
+  function updateConfig(configName: 'package.json'): void {
     const generalErrorText = 'Failed to create #resources namespace'
     const alreadyErrorText = 'Namespace #resources already exists in '
     fs.readFile('./' + configName, 'utf-8', (err, jsonData) => {
@@ -48,15 +48,7 @@ export async function configure(_command: ConfigureCommand) {
                 data['imports']['#resources/*'] = './app/resources/*.js'
               }
               break
-            case 'tsconfig.json':
-              if (data.compilerOptions?.paths?.['#resources/*'] !== undefined) {
-                console.log(alreadyErrorText + configName)
-              } else {
-                data['compilerOptions']['paths']['#resources/*'] = ['./app/resources/*.js']
-              }
-              break
           }
-          // Output is altered to keep tsconfig.json syntax compact as it out of the box
           fs.writeFile(
             './' + configName,
             JSON.stringify(data, null, 2)
@@ -77,5 +69,4 @@ export async function configure(_command: ConfigureCommand) {
 
   // Create "resources" namespace
   updateConfig('package.json')
-  updateConfig('tsconfig.json')
 }
