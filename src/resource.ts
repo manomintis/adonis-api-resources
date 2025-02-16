@@ -8,11 +8,7 @@
  */
 
 export abstract class Resource {
-  protected data: any
-
-  constructor(data: object) {
-    this.data = data
-  }
+  constructor(private data: any) {}
 
   abstract defineMap(data: any): object
 
