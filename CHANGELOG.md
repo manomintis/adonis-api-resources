@@ -2,6 +2,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.0.5] - 2025-07-19
+ 
+### Added
+- Added support for [MongoDB ODM for AdonisJS](https://github.com/DreamsHive/adonis-odm)
+
 ## [2.0.0] - 2024-06-19
  
 ### Added
