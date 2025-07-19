@@ -13,7 +13,11 @@ export abstract class Resource {
   abstract defineMap(data: any): object
 
   private isPaginated(): boolean {
-    return 'rows' in this.data && 'currentPage' in this.data
+    const ormPaginated = 'rows' in this.data && 'currentPage' in this.data
+    const odmPaginated = 'data' in this.data && 'meta' in this.data
+    const indeedPaginated = ormPaginated || odmPaginated
+    if (odmPaginated) this.data.getMeta = () => this.data.meta
+    return indeedPaginated
   }
 
   private isCollection(): boolean {
@@ -68,7 +72,7 @@ export abstract class Resource {
     if (this.isPaginated()) {
       this.data = this.parsePaginated(
         (this.data as any).getMeta(),
-        this.pickCollection((this.data as any).rows, keys)
+        this.pickCollection((this.data as any).rows || (this.data as any).data, keys)
       )
     } else if (this.isCollection()) {
       this.data = this.pickCollection(this.data, keys)
@@ -82,7 +86,7 @@ export abstract class Resource {
     if (this.isPaginated()) {
       this.data = this.parsePaginated(
         (this.data as any).getMeta(),
-        this.omitCollection((this.data as any).rows, keys)
+        this.omitCollection((this.data as any).rows || (this.data as any).data, keys)
       )
     } else if (this.isCollection()) {
       this.data = this.omitCollection(this.data, keys)
@@ -96,7 +100,7 @@ export abstract class Resource {
     if (this.isPaginated()) {
       this.data = this.parsePaginated(
         (this.data as any).getMeta(),
-        this.redefineCollection((this.data as any).rows)
+        this.redefineCollection((this.data as any).rows || (this.data as any).data)
       )
     } else if (this.isCollection()) {
       this.data = this.redefineCollection(this.data)
@@ -115,7 +119,7 @@ export abstract class Resource {
   }
 
   paginate(page: number = 1, limit: number = 10) {
-    let lastPage = Math.max(Math.ceil(this.data.length / limit), 1)
+    const lastPage = Math.max(Math.ceil(this.data.data.length / limit), 1)
     interface PaginationMeta {
       total: number
       perPage: number
@@ -138,7 +142,7 @@ export abstract class Resource {
       nextPageUrl: page < lastPage ? `/?page=${page + 1}` : null,
       previousPageUrl: page > 1 ? `/?page=${page - 1}` : null,
     }
-    const collection = this.data.slice((page - 1) * limit, page * limit)
+    const collection = (this.data.rows || this.data.data).slice((page - 1) * limit, page * limit)
     this.data = {
       meta: meta,
       data: collection,

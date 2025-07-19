@@ -123,9 +123,9 @@ return new UserResource(users).omit('createdAt', 'updatedAt').get()
 
 get() finalizes data processing. While pick(), omit() and redefine() modify data, trailing get() or paginate() is needed to complete the response. This requirement is not applied to refine() and refinePaginate()
 
-## Lucid pagination support
+## Pagination support
 
-Lucid offset-based pagination is supported.
+Offset-based pagination is supported for [Lucid](https://github.com/adonisjs/lucid) and [MongoDB ODM for AdonisJS](https://github.com/DreamsHive/adonis-odm)
 
 [gh-workflow-image]: https://img.shields.io/github/actions/workflow/status/manomintis/adonis-api-resources/test.yml?style=for-the-badge
 [gh-workflow-url]: https://github.com/manomintis/adonis-api-resources/actions/workflows/test.yml "Github action"
