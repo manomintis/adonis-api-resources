@@ -37,24 +37,9 @@
     "version": "npm run build",
     "prepublishOnly": "npm run build"
   },
-  "keywords": [
-    "adonisjs",
-    "resources",
-    "api"
-  ],
-  "author": "Boris Abramov <boris@ideainc.eu>",
-  "homepage": "https://github.com/manomintis/adonis-api-resources.git",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/manomintis/adonis-api-resources.git"
-  },
-  "bugs": {
-    "url": "https://github.com/manomintis/adonis-api-resources/issues"
-  },
-  "license": "MIT",
   "devDependencies": {
     "@adonisjs/assembler": "^7.0.0",
-    "@adonisjs/core": "^6.2.0",
+    "@adonisjs/core": "^6.17.0",
     "@adonisjs/eslint-config": "^1.2.1",
     "@adonisjs/prettier-config": "^1.2.1",
     "@adonisjs/tsconfig": "^1.2.1",
@@ -72,8 +57,52 @@
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "@adonisjs/core": "^6.0.0"
+    "@adonisjs/core": "^6.17.0"
   },
+  "author": "Boris Abramov <boris@ideainc.eu>",
+  "license": "MIT",
+  "homepage": "https://github.com/manomintis/adonis-api-resources.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manomintis/adonis-api-resources.git"
+  },
+  "bugs": {
+    "url": "https://github.com/manomintis/adonis-api-resources/issues"
+  },
+  "keywords": [
+    "adonisjs",
+    "adonis",
+    "adonis6",
+    "adonisjs6",
+    "api",
+    "rest",
+    "restful",
+    "restfulapi",
+    "rest-api",
+    "json",
+    "json-api",
+    "jsonapi",
+    "serializer",
+    "transformer",
+    "data-transform",
+    "api-transformer",
+    "api-response",
+    "http-response",
+    "resource",
+    "resources",
+    "output-format",
+    "presentation-layer",
+    "api-wrapper",
+    "fractal",
+    "fractaljs",
+    "laravel-resource",
+    "json-resource",
+    "eloquent-resource"
+  ],
+  "eslintConfig": {
+    "extends": "@adonisjs/eslint-config/package"
+  },
+  "prettier": "@adonisjs/prettier-config",
   "publishConfig": {
     "access": "public",
     "tag": "latest"
@@ -92,9 +121,5 @@
     "exclude": [
       "tests/**"
     ]
-  },
-  "eslintConfig": {
-    "extends": "@adonisjs/eslint-config/package"
-  },
-  "prettier": "@adonisjs/prettier-config"
+  }
 }
