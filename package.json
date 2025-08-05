@@ -20,6 +20,11 @@
     "./types": "./build/src/types.js",
     "./commands": "./build/commands/main.js"
   },
+  "imports": {
+    "#common/*": "./src/common/*.js",
+    "#utils/*": "./src/utils/*.js",
+    "#processors/*": "./src/processors/*.js"
+  },
   "scripts": {
     "clean": "del-cli build",
     "copy:templates": "copyfiles \"stubs/**/*.stub\" build",

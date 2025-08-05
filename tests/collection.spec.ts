@@ -52,25 +52,53 @@ const testObjectCollection = [
   },
 ]
 
-const resultRefineCollection: any = new TestResourceResource(testObjectCollection).refine()
-const resultPickCollection: any = new TestResourceResource(testObjectCollection)
-  .pick('firstName')
-  .get()
-const resultOmitCollection: any = new TestResourceResource(testObjectCollection)
-  .omit('firstName')
-  .get()
+const resultRefineCollection: any = new TestResourceResource(testObjectCollection).redefine()
+const resultPickCollection: any = new TestResourceResource(testObjectCollection).pick('firstName')
+const resultOmitCollection: any = new TestResourceResource(testObjectCollection).omit('firstName')
+const resultPaginatedCollection: any = new TestResourceResource(testObjectCollection).paginate(1, 3)
 
 test.group('Collection', () => {
   test('test_collection', ({ assert }) => {
-    assert.equal(resultRefineCollection[0].fullName, 'John Doe')
-    assert.equal(resultRefineCollection[1].fullName, 'Jane Doe')
+    const data = (resultRefineCollection as any).toJSON()
+    assert.equal(data[0].fullName, 'John Doe')
+    assert.equal(data[1].fullName, 'Jane Doe')
   })
   test('test_pick_collection', ({ assert }) => {
-    assert.equal(resultPickCollection[0].firstName, 'John')
-    assert.equal(resultPickCollection[0].lastName, undefined)
+    const data = (resultPickCollection as any).toJSON()
+    assert.equal(data[0].firstName, 'John')
+    assert.equal(data[0].lastName, undefined)
   })
   test('test_omit_collection', ({ assert }) => {
-    assert.equal(resultOmitCollection[0].firstName, undefined)
-    assert.equal(resultOmitCollection[0].lastName, 'Doe')
+    const data = (resultOmitCollection as any).toJSON()
+    assert.equal(data[0].firstName, undefined)
+    assert.equal(data[0].lastName, 'Doe')
+  })
+  test('test_paginate_collection', ({ assert }) => {
+    const data = (resultPaginatedCollection as any).toJSON()
+    assert.equal(data.data.length, 3)
+    assert.equal(data.data[0].firstName, 'John')
+    assert.equal(data.meta.currentPage, 1)
+    assert.equal(data.meta.total, 8)
+  })
+  test('test_chaining_methods', ({ assert }) => {
+    const result = new TestResourceResource(testObjectCollection).pick('firstName').remap()
+    const data = (result as any).toJSON()
+    assert.equal(data[0].fullName, 'John undefined')
+    assert.equal(data[0].firstName, 'John')
+    assert.equal(data[0].lastName, undefined)
+  })
+  test('test_refine_paginate_collection', ({ assert }) => {
+    const result = new TestResourceResource(testObjectCollection).refinePaginate(1, 2)
+    const data = (result as any).toJSON()
+    assert.equal(data.data.length, 2)
+    assert.equal(data.data[0].fullName, 'John Doe')
+    assert.equal(data.meta.currentPage, 1)
+  })
+  test('test_omit_with_serialize', ({ assert }) => {
+    // Test omit on object with serialize method
+    const result = new TestResourceResource(testObjectCollection).omit('lastName')
+    const data = (result as any).toJSON()
+    assert.equal(data[0].firstName, 'John')
+    assert.equal(data[0].lastName, undefined)
   })
 })
