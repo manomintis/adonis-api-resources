@@ -7,11 +7,11 @@
  * file that was distributed with this source code.
  */
 
-import { type Data, Processor } from '#common/types'
-import EntityProcessor from '#processors/entity'
-import CollectionProcessor from '#processors/collection'
-import PaginatedProcessor from '#processors/paginated'
-import { paginate } from '#utils/paginate'
+import { type Data, Processor } from './common/types.js'
+import EntityProcessor from './processors/entity.js'
+import CollectionProcessor from './processors/collection.js'
+import PaginatedProcessor from './processors/paginated.js'
+import { paginate } from './utils/paginate.js'
 
 export abstract class Resource {
   constructor(private data: Data) {}

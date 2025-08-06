@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import { Processor } from '#common/types'
-import { pick as pickEntity, omit as omitEntity } from '#utils/parsers'
+import { Processor } from '../common/types.js'
+import { pick as pickEntity, omit as omitEntity } from '../utils/parsers.js'
 
 export default class EntityProcessor implements Processor {
   pick(data: object, ...keys: string[]): object {

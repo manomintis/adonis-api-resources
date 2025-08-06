@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import { PaginatedData, PaginatedODMData, PaginatedORMData, Processor } from '#common/types'
-import CollectionProcessor from '#processors/collection'
+import { PaginatedData, PaginatedODMData, PaginatedORMData, Processor } from '../common/types.js'
+import CollectionProcessor from '../processors/collection.js'
 
 export default class PaginatedProcessor implements Processor {
   constructor(private collectionProcessor: CollectionProcessor) {}

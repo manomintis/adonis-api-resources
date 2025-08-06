@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import { PaginatedData, PaginationMeta } from '#common/types'
+import { PaginatedData, PaginationMeta } from '../common/types.js'
 
 export const paginate = (data: object[], page: number, limit: number): PaginatedData => {
   const lastPage = Math.max(Math.ceil(data.length / limit), 1)
