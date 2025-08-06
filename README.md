@@ -124,6 +124,10 @@ return new UserResource(users).omit('id', 'password').paginate()
 - **page** — Number of the page to show (optional, default: 1)  
 - **limit** — Items per page (optional, default: 10)
 
+### Important notice
+
+Do not use `paginate()` on a collection that has already been paginated. If the collection is paginated by an ORM or ODM, this extension will only forward the original pagination metadata to the endpoint without altering it.
+
 ## Pagination support
 
 Offset-based pagination is supported for [Lucid](https://github.com/adonisjs/lucid) and [MongoDB ODM for AdonisJS](https://github.com/DreamsHive/adonis-odm)
