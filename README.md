@@ -4,7 +4,7 @@
 
 ## Description
 
-Provides a transformation layer between models and actual API endpont responses in JSON format.
+Provides a transformation layer between a model and the actual API endpoint response in JSON format.
 
 ## Setup
 
@@ -20,35 +20,35 @@ Configure the package:
 node ace configure adonis-api-resources
 ```
 
-Generate a new resource (i.e. for a user):
+Generate a new resource (e.g., for a `User` model):
 
 ```sh
 node ace make:resource user
 ```
 
-Import your generated resource before using it, i.e. in a controller:
+Import the generated resource before using it, for example in a controller:
 
 ```typescript
 import UserResource from '#resources/user_resource'
 ```
 
-Remove old endpoint return declaration:
+Remove the old endpoint return declaration:
 
 ```typescript
 return user
 ```
 
-Use the your generated resource instead:
+Use the generated resource instead:
 
 ```typescript
-return new UserResource(user).refine()
+return new UserResource(user).remap()
 ```
 
-## redefine() and refine() - manually defined map
+## remap() - manually defined map
 
-redefine() modifies a model or array of models according to your custom map defined in resource file. Used along with get() method, which indicates that data processing is done and provides the result. You can also use refine(), which is an alias of redefine().get(), see example below.
+`remap()` modifies a model or an array of models according to the custom map defined in the resource file.
 
-Edit newly generated app/resources/user_resource.ts to create output you need. This example shows how you may output user's full name even if your implementation of user model has separate fields for the first and last names:
+Edit the newly generated `app/resources/user_resource.ts` file to produce the output you need. This example shows how you can output the user's full name, even if your `User` model has separate fields for the first and last names.
 
 ```typescript
 ...
@@ -58,10 +58,10 @@ Edit newly generated app/resources/user_resource.ts to create output you need. T
 ...
 ```
 
-You may also use arrays of models with resources:
+You can also use arrays of models with resources:
 
 ```typescript
-return new UserResource(users).refine()
+return new UserResource(users).remap()
 ```
 
 ### Output examples
@@ -87,41 +87,42 @@ Array of models:
 ]
 ```
 
-## paginate() and refinePaginate()
-
-In case you are dealing with not paginateable array you can still create pagination using this extension. refinePaginate() is an alias of redefine().paginate(), see examples below:
-
-```typescript
-return new UserResource(users).refinePaginate(page, limit)
-return new UserResource(users).redefine().paginate(page, limit)
-```
-
-Arguments:
-
-page - number of page to show (optional, default value: 1)<br />
-limit - items per page (optional, default value: 10)
-
 ## pick()
 
-No map definition is needed, once you only want to pick a few values of the object and leave other values behind. Examples:
+No map definition is needed if you only want to pick a few values from the object and leave the rest out. 
+
+Example:
 
 ```typescript
-return new UserResource(users).pick('firstName').get()
-return new UserResource(users).pick('firstName', 'lastName', 'email').paginate(1, 20)
+return new UserResource(users).pick('email', 'firstName', 'lastName')
 ```
 
 ## omit()
 
-No map definition is needed, once you only want to exclude a few values from the object. Examples:
+No map definition is needed if you only want to exclude a few values from the object. 
+
+Example:
 
 ```typescript
-return new UserResource(users).omit('id').paginate()
-return new UserResource(users).omit('createdAt', 'updatedAt').get()
+return new UserResource(users).omit('createdAt', 'updatedAt')
 ```
 
-## get()
+## paginate()
 
-get() finalizes data processing. While pick(), omit() and redefine() modify data, trailing get() or paginate() is needed to complete the response. This requirement is not applied to refine() and refinePaginate()
+If you are dealing with a non-paginated array, you can still create pagination using this extension. 
+
+See examples below:
+
+```typescript
+return new UserResource(users).remap().paginate(page, limit)
+return new UserResource(users).pick('email', 'firstName', 'lastName').paginate(page)
+return new UserResource(users).omit('id', 'password').paginate()
+```
+
+### Arguments
+
+- **page** — Number of the page to show (optional, default: 1)  
+- **limit** — Items per page (optional, default: 10)
 
 ## Pagination support
 

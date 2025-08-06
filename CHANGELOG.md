@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.0.7] - 2025-08-05
+ 
+### Added
+- Introduced updated method interfaces to align with new AdonisJS best practices (existing methods remain available for backward compatibility)
+- Code refactored
+- paginate() will now throw an error if called with anything other than an array of objects
+
 ## [2.0.5] - 2025-07-19
  
 ### Added
